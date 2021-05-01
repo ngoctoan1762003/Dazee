@@ -1,0 +1,10 @@
+<Save FileName="File_01">
+  <SceneName>2</SceneName>
+  <maxDamElement>200</maxDamElement>
+  <maxDefElement>0</maxDefElement>
+  <maxManaElement>1000</maxManaElement>
+  <maxStaElement>1000</maxStaElement>
+  <maxHPElement>500</maxHPElement>
+  <PlayerPositionX>-4.213253</PlayerPositionX>
+  <PlayerPositionY>-3.865</PlayerPositionY>
+</Save>
