@@ -1,25 +1,13 @@
 fileFormatVersion: 2
-guid: d2427b77ac015344d9643165ceaf1c82
+guid: 05d72390a9194a24a85d489049ed337a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7916891805261010378
-    second: maindash_0
+      213: 8793639957104055765
+    second: idle_0
   - first:
-      213: 8813154254961233669
-    second: maindash_1
-  - first:
-      213: -8531657477996148284
-    second: maindash_2
-  - first:
-      213: -2809726780057403087
-    second: maindash_3
-  - first:
-      213: 8465410189168908340
-    second: maindash_4
-  - first:
-      213: -8846467834722998497
-    second: maindash_5
+      213: 6084859605308855041
+    second: idle_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -109,55 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: maindash_0
+      name: idle_0
       rect:
         serializedVersion: 2
-        x: 62
-        y: 0
-        width: 18
-        height: 67
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63a673e39dc812290800000000000000
-      internalID: -7916891805261010378
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: maindash_1
-      rect:
-        serializedVersion: 2
-        x: 185
-        y: 0
-        width: 83
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 50fcfadc91d9e4a70800000000000000
-      internalID: 8813154254961233669
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: maindash_2
-      rect:
-        serializedVersion: 2
-        x: 312
+        x: 0
         y: 0
         width: 120
-        height: 35
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c90cb6f9b6799980800000000000000
-      internalID: -8531657477996148284
+      spriteID: 5d55ed543f8490a70800000000000000
+      internalID: 8793639957104055765
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: maindash_3
+      name: idle_1
       rect:
         serializedVersion: 2
-        x: 485
+        x: 120
         y: 0
-        width: 87
-        height: 40
+        width: 120
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,50 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 131c6ce4168d109d0800000000000000
-      internalID: -2809726780057403087
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: maindash_4
-      rect:
-        serializedVersion: 2
-        x: 638
-        y: 0
-        width: 64
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 438926327bd2b7570800000000000000
-      internalID: 8465410189168908340
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: maindash_5
-      rect:
-        serializedVersion: 2
-        x: 798
-        y: 0
-        width: 48
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f17aa6aff580b3580800000000000000
-      internalID: -8846467834722998497
+      spriteID: 103de827293c17450800000000000000
+      internalID: 6084859605308855041
       vertices: []
       indices: 
       edges: []

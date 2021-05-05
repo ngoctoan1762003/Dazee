@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     //stat
     public float maxHp, maxMana, maxStamina, maxDefense, currentHealth, currentMana, currentStamina;
 
-    public float speed=10f, jumpForce=400f, dashSpeed=100f, fallSpeed, h, radius, xWallJump, yWallJump;
+    public float speed = 10f, jumpForce = 400f, dashSpeed = 100f, fallSpeed, h, radius, xWallJump, yWallJump;
     public float startDashTime, currentDashTime, wallJumpTime, startWallJumpTime;
 
     public bool isGround, isOnWall, isWallSliding, isWallJump, isDoubleJump, isDashing, isFaceRight;
@@ -35,6 +35,11 @@ public class Player : MonoBehaviour
     public GameObject EarthShieldPrefab;
 
     public GameObject SoulFragmentUI;
+
+    //Animation controller----------------------------
+    public Animator anim;
+    //Attack---------------------
+    public int stepAttack;
 
     private void Awake()
     {
@@ -61,6 +66,10 @@ public class Player : MonoBehaviour
         currentHealth = maxHp;
         currentMana = maxMana;
         currentStamina = maxStamina;
+
+        //Animation Controller--------------------
+        anim = gameObject.GetComponent<Animator>();
+        stepAttack = 0;
     }
 
     // Update is called once per frame
@@ -102,10 +111,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
             if (currentStamina >= 20)
             {
+                anim.Play("Player_Dash");
                 currentDashTime = startDashTime;
                 isDashing = true;
                 GameObject dashDust;
-                dashDust = Instantiate(DashDustPrefab, (Vector2)transform.position - leftOffset / 3 + bottomOffset, Quaternion.identity);
+                dashDust = Instantiate(DashDustPrefab, (Vector2)transform.position - leftOffset / 3 + bottomOffset * 4, Quaternion.identity);
                 currentStamina -= 200;
             }
         }
@@ -124,7 +134,7 @@ public class Player : MonoBehaviour
         }
 
         //CheckCollision
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset, radius, groundLayer);
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset * 4, radius, groundLayer);
         isOnWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, radius, groundLayer) ||
             Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, radius, groundLayer);
 
@@ -152,10 +162,11 @@ public class Player : MonoBehaviour
         {
             if(attackReady == true)
             {
-                KnockBack();
+                KnockBack(new Vector2(-150, 0));
+                PlayAnimationAttack();
                 if (isFaceRight == true)
                 {
-                    Collider2D[] hitEnemy = Physics2D.OverlapCircleAll((Vector2)attackPointR.position, attackRadius, Enemy);
+                    Collider2D[] hitEnemy = Physics2D.OverlapCircleAll((Vector2)transform.position + rightOffset + bottomOffset, attackRadius, Enemy);
                     foreach (Collider2D enemy in hitEnemy)
                     {
                         Debug.Log("Hit" + enemy.name);
@@ -164,7 +175,7 @@ public class Player : MonoBehaviour
                 }
                 else
                 {
-                    Collider2D[] hitEnemy = Physics2D.OverlapCircleAll((Vector2)attackPointL.position, attackRadius, Enemy);
+                    Collider2D[] hitEnemy = Physics2D.OverlapCircleAll((Vector2)transform.position + leftOffset + bottomOffset, attackRadius, Enemy);
                     foreach (Collider2D enemy in hitEnemy)
                     {
                         Debug.Log("Hit" + enemy.name);
@@ -194,7 +205,7 @@ public class Player : MonoBehaviour
                     GameObject WindBullet;
                     WindBullet = Instantiate(WindBulletPrefab, (Vector2)attackPointR.position, Quaternion.identity) as GameObject;
                     WindBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(bulletSpeed, 0);
-                    KnockBack();
+                    KnockBack(KnockForce);
                     currentMana -= 100;
                 }
                 else
@@ -202,7 +213,7 @@ public class Player : MonoBehaviour
                     GameObject WindBullet;
                     WindBullet = Instantiate(WindBulletPrefab, (Vector2)attackPointL.position, Quaternion.identity) as GameObject;
                     WindBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-bulletSpeed, 0);
-                    KnockBack();
+                    KnockBack(KnockForce);
                     currentMana -= 100;
                 }
             }         
@@ -258,6 +269,7 @@ public class Player : MonoBehaviour
     void Flip()
     {
         isFaceRight = !isFaceRight;
+        gameObject.GetComponent<SpriteRenderer>().flipX = !isFaceRight;
     }
 
     //Being hit
@@ -271,7 +283,7 @@ public class Player : MonoBehaviour
     } 
 
     //Knock back
-    void KnockBack()
+    void KnockBack(Vector2 KnockForce)
     {
         r2D.velocity = Vector2.zero;
         if (isFaceRight)
@@ -296,4 +308,33 @@ public class Player : MonoBehaviour
         currentStamina = 0;
     }
 
+    //Animation Controller--------------------------
+    void PlayAnimationAttack()
+    {
+        switch (stepAttack)
+        {
+            case 0: 
+                anim.Play("Player_Attack1");
+                stepAttack++;
+                break;
+            case 1:
+                anim.Play("Player_Attack2");
+                stepAttack++;
+                break;
+            case 2:
+                stepAttack++;
+                anim.Play("Player_Attack3");
+                break;
+            case 3:
+                stepAttack = 0;
+                anim.Play("Player_Attack4");
+                break;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset + bottomOffset, attackRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset * 4, radius);
+    }
 }
