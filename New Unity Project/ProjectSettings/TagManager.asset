@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Enemy
   - UIManager
+  - EarthShield
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 2981732607
+    locked: 0
+  - name: PlayGround
+    uniqueID: 693877237
+    locked: 0
+  - name: ForeGround
+    uniqueID: 3413103105
     locked: 0

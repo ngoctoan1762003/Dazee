@@ -11,16 +11,19 @@ public class SavePoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Nofication.SetActive(true);
-        NoficationText.text = "Save";
+        if (collision.CompareTag("Player"))
+        {
+            Nofication.SetActive(true);
+            NoficationText.text = "Save";
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Nofication.SetActive(true);
-        NoficationText.text = "Save";
         if (collision.CompareTag("Player"))
         {
+            Nofication.SetActive(true);
+            NoficationText.text = "Save";
             if (Input.GetKeyDown(KeyCode.F))
             {
                 SaveUI.SetActive(true);
