@@ -36,7 +36,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            player.TakeDamage(100);
+            player.TakeDamage(damage);
 
             if (player.transform.position.x > transform.position.x)
             {
@@ -47,7 +47,6 @@ public class EnemyBullet : MonoBehaviour
                 player.GetComponent<Player>().DamagedKnockBackForce(new Vector2(-150, 100));
             }
         }
-
         if (collision.collider.CompareTag("EarthShield"))
         {
             collision.gameObject.GetComponent<EarthShield>().TakeDamage(damage);

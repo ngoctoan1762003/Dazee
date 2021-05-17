@@ -12,12 +12,18 @@ public class UIManager : MonoBehaviour
 
     public GameObject[] slot;
 
-    public GameObject inventoryUI;
+    //Inventory UI and ANIMATION-----------------
+    public GameObject Property;
+    public Transform inventoryUI;
+    public Transform BrokenFragmentInventoryUI;
+    public int step;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        DisplayItem();
     }
 
     // Update is called once per frame
@@ -26,6 +32,8 @@ public class UIManager : MonoBehaviour
         HealthUI.fillAmount = player.currentHealth / player.maxHp;
         ManaUI.fillAmount = player.currentMana / player.maxMana;
         StaminaUI.fillAmount = player.currentStamina / player.maxStamina;
+
+        //Player stat effect
         if (HealthEf.fillAmount > HealthUI.fillAmount)
         {
             HealthEf.fillAmount -= Time.deltaTime;
@@ -51,17 +59,19 @@ public class UIManager : MonoBehaviour
             StaminaEf.fillAmount = StaminaUI.fillAmount;
         }
 
-        //Inventory UI-------------------------------
+        //Property UI-------------------------------
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameManager.instance.isPaused == true)
             {
-                inventoryUI.gameObject.SetActive(false);
+                Property.SetActive(false);
                 Time.timeScale = 1;
             }
             else
             {
-                inventoryUI.gameObject.SetActive(true);
+                BrokenFragmentInventoryUI.localPosition = new Vector2(Screen.width, BrokenFragmentInventoryUI.localPosition.y);
+                step = 0;
+                Property.SetActive(true);
                 Time.timeScale = 0;
             }
             GameManager.instance.isPaused = !GameManager.instance.isPaused;
@@ -105,6 +115,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    //inventory
     public void DisplayItem()
     {
         for (int i = 0; i < slot.Length; i++)
@@ -127,4 +138,43 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    //inventory ANIMATION BUTTON
+    public void RightButton()
+    {
+        if (step == 0)
+        {
+            BrokenFragmentInventoryUI.localPosition = new Vector2(Screen.width, BrokenFragmentInventoryUI.localPosition.y);
+            inventoryUI.LeanMoveLocalX(-Screen.width, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            BrokenFragmentInventoryUI.LeanMoveLocalX(0, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            step = 1;
+        }
+        else if (step == 1)
+        {
+            inventoryUI.localPosition = new Vector2(Screen.width, inventoryUI.localPosition.y);
+            inventoryUI.LeanMoveLocalX(0, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            BrokenFragmentInventoryUI.LeanMoveLocalX(-Screen.width, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            step = 0;
+        }
+    }
+
+    public void LeftButton()
+    {
+        if (step == 0)
+        {
+            BrokenFragmentInventoryUI.localPosition = new Vector2(-Screen.width, BrokenFragmentInventoryUI.localPosition.y);
+            inventoryUI.LeanMoveLocalX(Screen.width, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            BrokenFragmentInventoryUI.LeanMoveLocalX(0, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            step = 1;
+        }
+        else if (step == 1)
+        {
+            inventoryUI.localPosition = new Vector2(-Screen.width, inventoryUI.localPosition.y);
+            inventoryUI.LeanMoveLocalX(0, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            BrokenFragmentInventoryUI.LeanMoveLocalX(Screen.width, 0.5f).setEaseOutQuint().setIgnoreTimeScale(true);
+            step = 0;
+        }
+
+    }
+
 }

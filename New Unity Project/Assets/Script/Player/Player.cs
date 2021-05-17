@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
         }
 
         //CheckCollision
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset * 3, radius, groundLayer);
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + bottomOffset * 4, radius, groundLayer);
         isOnWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, radius, groundLayer) ||
             Physics2D.OverlapCircle((Vector2)transform.position + leftOffset, radius, groundLayer);
 
@@ -335,6 +335,6 @@ public class Player : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset + bottomOffset, attackRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset * 3, radius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + bottomOffset * 4, radius);
     }
 }

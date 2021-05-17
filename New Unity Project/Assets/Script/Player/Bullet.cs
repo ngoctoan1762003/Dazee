@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float lifeSpan;
+    public float damage;
 
     private void Update()
     {
@@ -20,7 +21,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy") )
         {
-            collision.collider.gameObject.GetComponent<Enemy>().TakeDamage(200);
+            collision.collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             Destroy(gameObject);
         }
         if (collision.collider.CompareTag("Ground"))
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(200);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             Destroy(gameObject);
         }
     }

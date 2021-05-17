@@ -40,10 +40,6 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        if (GameObject.Find("UIMananger"))
-        {
-            GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().DisplayItem();
-        }
         //LoadGame(0);
     }
 
