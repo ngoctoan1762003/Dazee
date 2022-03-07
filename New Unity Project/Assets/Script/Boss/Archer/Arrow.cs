@@ -19,18 +19,18 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            collision.collider.gameObject.GetComponent<Player>().TakeDamage(damage);
+            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
             Destroy(gameObject);
         }
-        if (collision.collider.CompareTag("Ground"))
+        if (collision.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }
-        if (collision.collider.CompareTag("EarthShield"))
+        if (collision.CompareTag("EarthShield"))
         {
             collision.gameObject.GetComponent<EarthShield>().TakeDamage(damage);
             Destroy(gameObject);

@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
                     foreach (Collider2D enemy in hitEnemy)
                     {
                         Debug.Log("Hit" + enemy.name);
-                        enemy.GetComponent<Enemy>().TakeDamage(damage);
+                        enemy.GetComponent<Archer>().TakeDamage(damage);
                     }
                 }
                 else
@@ -179,7 +179,7 @@ public class Player : MonoBehaviour
                     foreach (Collider2D enemy in hitEnemy)
                     {
                         Debug.Log("Hit" + enemy.name);
-                        enemy.GetComponent<Enemy>().TakeDamage(damage);
+                        enemy.GetComponent<Archer>().TakeDamage(damage);
                     }
                 }
                 attackReady = false;
@@ -227,13 +227,13 @@ public class Player : MonoBehaviour
                 if (isFaceRight)
                 {
                     GameObject EarthShield;
-                    EarthShield = Instantiate(EarthShieldPrefab, (Vector2)attackPointR.position + rightOffset * 3, Quaternion.identity) as GameObject;
+                    EarthShield = Instantiate(EarthShieldPrefab, (Vector2)attackPointR.position + rightOffset, Quaternion.identity) as GameObject;
                     currentMana -= 100;
                 }
                 else
                 {
                     GameObject EarthShield;
-                    EarthShield = Instantiate(EarthShieldPrefab, (Vector2)attackPointL.position - leftOffset * -3, Quaternion.identity) as GameObject;
+                    EarthShield = Instantiate(EarthShieldPrefab, (Vector2)attackPointL.position - leftOffset, Quaternion.identity) as GameObject;
                     currentMana -= 100;
                 }
             }
@@ -252,6 +252,16 @@ public class Player : MonoBehaviour
         {
             currentStamina += Time.deltaTime * 100;
         }
+    }
+
+    public IEnumerator Tied(float time)
+    {
+        Debug.Log("tie");
+        speed = 0;
+        jumpForce = 0;
+        yield return new WaitForSeconds(time);
+        speed = 10f;
+        jumpForce = 400f;
     }
 
     //Dash 

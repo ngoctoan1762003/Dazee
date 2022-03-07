@@ -8,7 +8,11 @@ using UnityEngine;
 public class Archer : MonoBehaviour
 {
     public Rigidbody2D r2D;
-    public Player player; 
+    public Player player;
+
+    //Stat
+    public float maxHealth = 10000;
+    public float currentHealth;
 
     //NORMAL ATTACK
     public GameObject Arrow;
@@ -22,9 +26,21 @@ public class Archer : MonoBehaviour
     public float attackDuration;
     public float attackTime;
 
+    //TIE
+    public GameObject Rope;
+
+    //RAIN
+    public GameObject RainArrow;
+
+    //TELE
+    public Transform[] telePos;
+
+    //WALL
+    public GameObject wall;
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         r2D = gameObject.GetComponent<Rigidbody2D>();      
     }
@@ -36,15 +52,40 @@ public class Archer : MonoBehaviour
         {
             if (attackTime <= 0)
             {
-                NormalAttack();
-                attackTime = attackDuration;
+                int rand = Random.Range(1,6);
+                Debug.Log(rand);
+                if(rand==1) {
+                    if (Mathf.Abs(player.transform.position.y - transform.position.y) <= 1) NormalAttack();
+                    else Rain();
+                    attackTime = attackDuration;
+                }
+                if(rand==2)
+                {
+                    TieRope();
+                    attackTime = attackDuration;
+                }
+                if (rand == 3)
+                {
+                    Rain();
+                    attackTime = attackDuration;
+                }
+                if (rand == 4)
+                {
+                    Tele();
+                    attackTime = attackDuration;
+                }
+                if (rand == 5)
+                {
+                    WallMake();
+                    attackTime = attackDuration-1.5f;
+                }
             }
             else
             {
                 attackTime -= Time.deltaTime;
             }
         }
-
+        
     }
 
     void NormalAttack()
@@ -88,5 +129,74 @@ public class Archer : MonoBehaviour
             ArrowClone2 = Instantiate(Arrow, transform.position + leftOffset, Quaternion.identity) as GameObject;
             ArrowClone2.GetComponent<Rigidbody2D>().velocity = new Vector2(-speed, 0);
         }
+    }
+
+    public void TieRope()
+    {
+        GameObject RopeClone = Instantiate(Rope, player.transform.position, Quaternion.identity) as GameObject;
+        StartCoroutine(player.Tied(3f));
+    }
+    
+    public void Rain()
+    {
+        StartCoroutine(RainShot());
+    }
+
+    IEnumerator RainShot()
+    {
+        GameObject ArrowClone;
+        ArrowClone = Instantiate(RainArrow, new Vector3(player.transform.position.x, 10, 0), Quaternion.identity) as GameObject;
+
+        yield return new WaitForSeconds(shotDuration);
+        ArrowClone = Instantiate(RainArrow, new Vector3(player.transform.position.x, 10, 0), Quaternion.identity) as GameObject;
+
+        yield return new WaitForSeconds(shotDuration);
+        ArrowClone = Instantiate(RainArrow, new Vector3(player.transform.position.x, 10, 0), Quaternion.identity) as GameObject;
+    }
+
+    public void Tele()
+    {
+        int rand = Random.Range(1, 6);
+        transform.position = telePos[rand].position;
+    }
+
+    public void WallMake()
+    {
+        GameObject WallClone;
+        if (player.transform.position.x > transform.position.x)
+        {
+            WallClone = Instantiate(wall, new Vector3(player.transform.position.x + 1, player.transform.position.y, 0), Quaternion.identity);
+        }
+        else
+        {
+            WallClone = Instantiate(wall, new Vector3(player.transform.position.x - 1, player.transform.position.y, 0), Quaternion.identity);
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("hit");
+        currentHealth -= damage;
+        KnockBack(new Vector2(150, 100));
+        if (currentHealth <= 0)
+        {
+            Dead();
+        }
+    }
+
+    void KnockBack(Vector2 KnockForce)
+    {
+        r2D.velocity = Vector2.zero;
+        if (player.transform.position.x > transform.position.x)
+        {
+            r2D.AddForce(new Vector2(-KnockForce.x, KnockForce.y));
+        }
+        else r2D.AddForce(new Vector2(KnockForce.x, KnockForce.y));
+    }
+
+
+    public void Dead()
+    {
+        Destroy(gameObject);
     }
 }
